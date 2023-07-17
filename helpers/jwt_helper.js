@@ -8,7 +8,7 @@ module.exports = {
       const payload = {}
       const secret = process.env.ACCESS_TOKEN_SECRET
       const options = {
-        expiresIn: '1h',
+        expiresIn: '30s',
         issuer: 'anuragbakode',
         audience: userId.toString(),
       }
@@ -24,17 +24,16 @@ module.exports = {
     })
   },
   verifyAccessToken: (req, res, next) => {
-    if (!req.headers['authorization']) return next(createError.Unauthorized())
-    const authHeader = req.headers['authorization']
-    const bearerToken = authHeader.split(' ')
-    const token = bearerToken[1]
-    JWT.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
+    if (!req.cookies['accesstoken']) return next(createError.Unauthorized())
+    const token = req.cookies['accesstoken']
+    JWT.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, payload) => {
       if (err) {
         const message =
           err.name === 'JsonWebTokenError' ? 'Unauthorized' : err.message
         return next(createError.Unauthorized(message))
       }
       req.payload = payload
+      console.log(req.payload)
       next()
     })
   },  
@@ -43,7 +42,7 @@ module.exports = {
       const payload = {}
       const secret = process.env.REFRESH_TOKEN_SECRET
       const options = {
-        expiresIn: '1y',
+        expiresIn: '1h',
         issuer: 'anuragbakode',
         audience: userId,
       }
@@ -53,7 +52,7 @@ module.exports = {
           // reject(err)
           reject(createError.InternalServerError())
         }
-        client.set(userId, token, 'EX', 365 * 24 * 60 * 60, (err, reply) => {
+        client.set(userId, token, 'EX', 3600, (err, reply) => {
           console.log("Inside setter function")
           if (err) {
             console.log(err.message)
@@ -66,6 +65,7 @@ module.exports = {
     })
   },
   verifyRefreshToken: (refreshToken) => {
+    console.log(refreshToken)
     return new Promise((resolve, reject) => {
       JWT.verify(
         refreshToken,

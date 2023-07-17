@@ -29,7 +29,7 @@
 const { createClient } = require("redis")
 
 const client = createClient({
-  url: "rediss://default:9ec244057c504b8a83bbb119fc0db72b@busy-kingfish-39642.upstash.io:39642"
+  url: process.env.REDIS_URL
 });
 
 client.on("error", function (err) {

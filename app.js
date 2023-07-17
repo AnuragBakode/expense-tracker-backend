@@ -6,17 +6,20 @@ require('./helpers/init_mongodb')
 const { verifyAccessToken } = require('./helpers/jwt_helper')
 require('./helpers/init_redis')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 
 const AuthRoute = require('./Routes/Auth.route')
 
 const app = express()
+app.use(cookieParser());
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cors())
+app.use(cors({ origin: true, credentials: true }));
+
 
 app.get('/', verifyAccessToken, async (req, res, next) => {
-  res.send('Hello from express.')
+  res.send(req.payload)
 })
 
 app.use('/auth', AuthRoute)
