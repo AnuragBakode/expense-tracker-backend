@@ -40,8 +40,8 @@ module.exports = {
       const accessToken = await signAccessToken(user.id)
       const refreshToken = await signRefreshToken(user.id)
 
-      res.cookie("accesstoken", accessToken, { sameSite: 'none', secure: false, httpOnly: true })
-      res.cookie("refreshtoken", refreshToken, { sameSite: 'none', secure: false, httpOnly: true })
+      res.cookie("accesstoken", accessToken, { sameSite: 'None', secure: false, httpOnly: true })
+      res.cookie("refreshtoken", refreshToken, { sameSite: 'None', secure: false, httpOnly: true })
 
       res.send({ accessToken, refreshToken })
     } catch (error) {
