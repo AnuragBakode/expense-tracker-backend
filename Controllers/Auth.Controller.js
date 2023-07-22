@@ -29,6 +29,7 @@ module.exports = {
   login: async (req, res, next) => {
     try {
       // const result = await authSchema.validateAsync(req.body)
+      console.log("Inside Login")
       const user = await User.findOne({ email: req.body.email })
       if (!user) throw createError.NotFound('User not registered')
 
@@ -39,8 +40,8 @@ module.exports = {
       const accessToken = await signAccessToken(user.id)
       const refreshToken = await signRefreshToken(user.id)
 
-      res.cookie("accesstoken", accessToken, { httpOnly: true })
-      res.cookie("refreshtoken", refreshToken, { httpOnly: true })
+      res.cookie("accesstoken", accessToken, { sameSite: false, secure: false, httpOnly: true })
+      res.cookie("refreshtoken", refreshToken, { sameSite: false, secure: false, httpOnly: true })
 
       res.send({ accessToken, refreshToken })
     } catch (error) {
@@ -61,8 +62,8 @@ module.exports = {
 
       res.clearCookie()
 
-      res.cookie("accesstoken", accessToken, { httpOnly: true })
-      res.cookie("refreshtoken", refToken, { httpOnly: true })
+      res.cookie("accesstoken", accessToken, { sameSite: false, secure: false, httpOnly: true })
+      res.cookie("refreshtoken", refToken, { sameSite: false, secure: false, httpOnly: true })
 
       res.send({ accessToken: accessToken, refreshToken: refToken })
     } catch (error) {
