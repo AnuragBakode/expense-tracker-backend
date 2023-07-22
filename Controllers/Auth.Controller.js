@@ -75,6 +75,7 @@ module.exports = {
       const { refreshToken } = req.body
       if (!refreshToken) throw createError.BadRequest()
       const userId = await verifyRefreshToken(refreshToken)
+      res.clearCookie()
       client.DEL(userId, (err, val) => {
         if (err) {
           throw createError.InternalServerError()
