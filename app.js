@@ -7,7 +7,6 @@ const { verifyAccessToken } = require('./helpers/jwt_helper')
 require('./helpers/init_redis')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-
 const AuthRoute = require('./Routes/Auth.route')
 const ExpenseRoute = require('./Routes/Expense.route')
 
