@@ -15,7 +15,7 @@ const app = express()
 app.use(cookieParser());
 app.use(morgan('dev'))
 app.use(express.json())
-app.use(cors({ origin: true, credentials: true }));
+app.use("*", cors({ origin: true, credentials: true }));
 
 
 app.get('/', verifyAccessToken, async (req, res, next) => {
