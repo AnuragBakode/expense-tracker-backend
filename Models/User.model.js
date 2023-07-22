@@ -17,6 +17,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  expenses: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "expense"
+  }]
 })
 
 UserSchema.pre('save', async function (next) {

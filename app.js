@@ -9,6 +9,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
 const AuthRoute = require('./Routes/Auth.route')
+const ExpenseRoute = require('./Routes/Expense.route')
 
 const app = express()
 app.use(cookieParser());
@@ -23,6 +24,7 @@ app.get('/', verifyAccessToken, async (req, res, next) => {
 })
 
 app.use('/auth', AuthRoute)
+app.use(ExpenseRoute)
 
 app.use(async (req, res, next) => {
   next(createError.NotFound())
