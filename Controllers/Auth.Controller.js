@@ -62,8 +62,8 @@ module.exports = {
 
       res.clearCookie()
 
-      res.cookie("accesstoken", accessToken, { sameSite: false, secure: false, httpOnly: true })
-      res.cookie("refreshtoken", refToken, { sameSite: false, secure: false, httpOnly: true })
+      res.cookie("accesstoken", accessToken, { sameSite: false, secure: false, httpOnly: true, domain: 'http://localhost:3000' })
+      res.cookie("refreshtoken", refToken, { sameSite: false, secure: false, httpOnly: true, domain: 'http://localhost:3000' })
 
       res.send({ accessToken: accessToken, refreshToken: refToken })
     } catch (error) {
