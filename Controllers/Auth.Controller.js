@@ -40,8 +40,8 @@ module.exports = {
       const accessToken = await signAccessToken(user.id)
       const refreshToken = await signRefreshToken(user.id)
 
-      res.cookie("accesstoken", accessToken, { sameSite: false, secure: false, httpOnly: true })
-      res.cookie("refreshtoken", refreshToken, { sameSite: false, secure: false, httpOnly: true })
+      res.cookie("accesstoken", accessToken, { sameSite: 'none', secure: false, httpOnly: true })
+      res.cookie("refreshtoken", refreshToken, { sameSite: 'none', secure: false, httpOnly: true })
 
       res.send({ accessToken, refreshToken })
     } catch (error) {
@@ -62,8 +62,8 @@ module.exports = {
 
       res.clearCookie()
 
-      res.cookie("accesstoken", accessToken, { sameSite: false, secure: false, httpOnly: true, domain: 'onrender.com' })
-      res.cookie("refreshtoken", refToken, { sameSite: false, secure: false, httpOnly: true, domain: 'onrender.com' })
+      res.cookie("accesstoken", accessToken, { sameSite: 'none', secure: false, httpOnly: true })
+      res.cookie("refreshtoken", refToken, { sameSite: 'none', secure: false, httpOnly: true })
 
       res.send({ accessToken: accessToken, refreshToken: refToken })
     } catch (error) {
