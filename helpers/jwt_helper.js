@@ -8,7 +8,7 @@ module.exports = {
       const payload = {}
       const secret = process.env.ACCESS_TOKEN_SECRET
       const options = {
-        expiresIn: '30s',
+        expiresIn: '1h',
         issuer: 'anuragbakode', 
         audience: userId.toString(),
       }
@@ -42,7 +42,7 @@ module.exports = {
       const payload = {}
       const secret = process.env.REFRESH_TOKEN_SECRET
       const options = {
-        expiresIn: '2M',
+        expiresIn: '1y',
         issuer: 'anuragbakode',
         audience: userId,
       }
@@ -52,7 +52,7 @@ module.exports = {
           // reject(err)
           reject(createError.InternalServerError())
         }
-        client.set(userId, token, 'EX', 120, (err, reply) => {
+        client.set(userId, token, 'EX', 365 * 24 * 60 * 60, (err, reply) => {
           console.log("Inside setter function")
           if (err) {
             console.log(err.message)
