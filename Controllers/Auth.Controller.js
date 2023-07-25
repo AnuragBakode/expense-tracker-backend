@@ -62,8 +62,8 @@ module.exports = {
 
       res.clearCookie()
 
-      res.cookie("accesstoken", accessToken, { sameSite: 'none', secure: true, httpOnly: true })
-      res.cookie("refreshtoken", refToken, { sameSite: 'none', secure: true, httpOnly: true })
+      res.cookie("accesstoken", accessToken, { sameSite: 'None', secure: true, httpOnly: true })
+      res.cookie("refreshtoken", refToken, { sameSite: 'None', secure: true, httpOnly: true })
 
       res.send({ accessToken: accessToken, refreshToken: refToken })
     } catch (error) {
@@ -73,7 +73,8 @@ module.exports = {
 
   logout: async (req, res, next) => {
     try {
-      const { refreshToken } = req.body
+      console.log(req.cookies['refreshtoken'])
+      const refreshToken = req.cookies['refreshtoken']
       if (!refreshToken) throw createError.BadRequest()
       const userId = await verifyRefreshToken(refreshToken)
       res.clearCookie()
@@ -82,9 +83,11 @@ module.exports = {
           throw createError.InternalServerError()
         }
         res.sendStatus(204)
+
       })
     } catch (error) {
       next(error)
+      console.log(error)
     }
   },
 }

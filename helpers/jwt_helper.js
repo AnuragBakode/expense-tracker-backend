@@ -9,7 +9,7 @@ module.exports = {
       const secret = process.env.ACCESS_TOKEN_SECRET
       const options = {
         expiresIn: '30s',
-        issuer: 'anuragbakode',
+        issuer: 'anuragbakode', 
         audience: userId.toString(),
       }
       JWT.sign(payload, secret, options, (err, token) => {
